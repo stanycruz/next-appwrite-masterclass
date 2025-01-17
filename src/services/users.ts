@@ -32,3 +32,16 @@ export const registerNewUser = async (
     throw new Error(error);
   }
 };
+
+export const loginUser = async (email: string, password: string) => {
+  try {
+    const response = await account.createEmailPasswordSession(email, password);
+    return {
+      success: true,
+      message: 'User logged in successfully',
+      data: response,
+    };
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};

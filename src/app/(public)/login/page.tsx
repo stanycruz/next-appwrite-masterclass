@@ -1,12 +1,30 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { loginUser } from '@/services/users';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
+import toast from 'react-hot-toast';
 
 function LoginPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const router = useRouter();
+
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
+      const response = await loginUser(email, password);
+      toast.success(response.message);
+      router.push('/dashboard');
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="auth-background">
@@ -29,7 +47,9 @@ function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <Button>Login</Button>
+        <Button disabled={loading || !email || !password} onClick={handleLogin}>
+          Login
+        </Button>
 
         <p className="text-center text-sm">
           Don't have an account?{' '}

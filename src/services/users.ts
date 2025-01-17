@@ -1,6 +1,6 @@
 import { account, databases } from '@/config/appwrite-config';
 import { APPWRITE_DATABASE_ID, USERS_COLLECTION_ID } from '@/constants';
-import { ID } from 'appwrite';
+import { ID, Query } from 'appwrite';
 
 export const registerNewUser = async (
   name: string,
@@ -40,6 +40,30 @@ export const loginUser = async (email: string, password: string) => {
       success: true,
       message: 'User logged in successfully',
       data: response,
+    };
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const getLoggedInUser = async () => {
+  try {
+    const authResponse = await account.get();
+    const userDocResponse = await databases.listDocuments(
+      APPWRITE_DATABASE_ID,
+      USERS_COLLECTION_ID,
+      [Query.equal('userId', authResponse.$id)]
+    );
+    const user = userDocResponse.documents[0];
+    const finalUserObject = {
+      ...authResponse,
+      ...user,
+    };
+
+    return {
+      success: true,
+      message: 'User fetched successfully',
+      data: finalUserObject,
     };
   } catch (error: any) {
     throw new Error(error);

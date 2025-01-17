@@ -1,0 +1,2 @@
+export const APPWRITE_DATABASE_ID = '6789bfc10026465da71e';
+export const USERS_COLLECTION_ID = '6789bfdb002c177d459a';

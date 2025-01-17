@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { registerNewUser } from '@/services/users';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import toast from 'react-hot-toast';
 
@@ -11,13 +12,14 @@ function RegisterPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const router = useRouter();
 
   const handleRegister = async () => {
     try {
       setLoading(true);
       const response = await registerNewUser(name, email, password);
       toast.success(response.message);
-      console.log(response.data);
+      router.push('/login');
     } catch (error: any) {
       toast.error(error.message);
     } finally {

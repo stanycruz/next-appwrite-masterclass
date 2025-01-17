@@ -69,3 +69,15 @@ export const getLoggedInUser = async () => {
     throw new Error(error);
   }
 };
+
+export const logoutUser = async () => {
+  try {
+    await account.deleteSession('current');
+    return {
+      success: true,
+      message: 'User logged out successfully',
+    };
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};

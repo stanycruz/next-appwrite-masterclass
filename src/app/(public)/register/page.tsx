@@ -1,13 +1,29 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { registerNewUser } from '@/services/users';
 import Link from 'next/link';
 import React from 'react';
+import toast from 'react-hot-toast';
 
 function RegisterPage() {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+
+  const handleRegister = async () => {
+    try {
+      setLoading(true);
+      const response = await registerNewUser(name, email, password);
+      toast.success(response.message);
+      console.log(response.data);
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="auth-background">
@@ -37,7 +53,12 @@ function RegisterPage() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <Button>Register</Button>
+        <Button
+          disabled={loading || !name || !email || !password}
+          onClick={handleRegister}
+        >
+          Register
+        </Button>
 
         <p className="text-center text-sm">
           Already have an account?{' '}

@@ -1,11 +1,30 @@
 'use client';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
-import React from 'react';
+import toast from 'react-hot-toast';
+import { account } from '@/config/appwrite-config';
 
 function ForgotPasswordPagePage() {
   const [email, setEmail] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+
+  const handleSendResetLink = async () => {
+    try {
+      setLoading(true);
+      await account.createRecovery(
+        email,
+        `${window.location.origin}/reset-password`
+      );
+      toast.success('Reset link sent successfully');
+      setEmail('');
+    } catch (error) {
+      toast.error('Failed to send reset link');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="auth-background">
@@ -20,7 +39,9 @@ function ForgotPasswordPagePage() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <Button>Send Reset Link</Button>
+        <Button onClick={handleSendResetLink} disabled={loading}>
+          Send Reset Link
+        </Button>
 
         <p className="text-center text-sm">
           Click here to{' '}

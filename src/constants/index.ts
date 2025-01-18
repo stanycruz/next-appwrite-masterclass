@@ -8,6 +8,7 @@ export const publicRoutes = [
   '/register',
   '/forgot-password',
   '/reset-password',
+  '/verify-email',
 ];
 
 // routes which require authentication

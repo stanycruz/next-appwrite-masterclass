@@ -5,6 +5,7 @@ import { getLoggedInUser, logoutUser } from '@/services/users';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 function DashboardPage() {
   const [loggedInUser, setLoggedInUser] = React.useState<IUser | null>(null);
@@ -30,6 +31,7 @@ function DashboardPage() {
       setPerformingLogout(true);
       await logoutUser();
       toast.success('Logged out successfully');
+      Cookies.remove('token');
       router.push('/login');
     } catch (error) {
       toast.error(error);

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 function LoginPage() {
   const [email, setEmail] = React.useState('');
@@ -18,6 +19,7 @@ function LoginPage() {
       setLoading(true);
       const response = await loginUser(email, password);
       toast.success(response.message);
+      Cookies.set('token', JSON.stringify(response.data));
       router.push('/dashboard');
     } catch (error: any) {
       toast.error(error.message);

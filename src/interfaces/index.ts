@@ -5,4 +5,5 @@ export interface IUser {
   profilePictureUrl: string;
   $createdAt: number;
   $updatedAt: number;
+  emailVerification: boolean;
 }

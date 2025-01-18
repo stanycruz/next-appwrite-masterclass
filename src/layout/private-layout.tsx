@@ -4,6 +4,7 @@ import { IUser } from '@/interfaces';
 import { getLoggedInUser } from '@/services/users';
 import toast from 'react-hot-toast';
 import Spinner from '@/components/ui/spinner';
+import VerifyEmail from '@/components/functional/verify-email';
 
 function PrivateLayout({ children }: { children: React.ReactNode }) {
   const [loggedInUser, setLoggedInUser] = React.useState<IUser | null>(null);
@@ -29,6 +30,15 @@ function PrivateLayout({ children }: { children: React.ReactNode }) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Spinner />
+      </div>
+    );
+  }
+
+  if (loggedInUser && !loggedInUser.emailVerification) {
+    return (
+      <div>
+        <Header loggedInUser={loggedInUser as IUser} />
+        <VerifyEmail />
       </div>
     );
   }

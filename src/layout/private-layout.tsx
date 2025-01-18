@@ -3,6 +3,7 @@ import Header from './header';
 import { IUser } from '@/interfaces';
 import { getLoggedInUser } from '@/services/users';
 import toast from 'react-hot-toast';
+import Spinner from '@/components/ui/spinner';
 
 function PrivateLayout({ children }: { children: React.ReactNode }) {
   const [loggedInUser, setLoggedInUser] = React.useState<IUser | null>(null);
@@ -27,7 +28,7 @@ function PrivateLayout({ children }: { children: React.ReactNode }) {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <h1>Loading...</h1>
+        <Spinner />
       </div>
     );
   }

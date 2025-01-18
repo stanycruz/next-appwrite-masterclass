@@ -2,14 +2,35 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { account } from '@/config/appwrite-config';
 
 function ResetPasswordPage() {
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const searchParams = useSearchParams();
+  const [loading, setLoading] = React.useState(false);
   const userId = searchParams.get('userId');
-  const token = searchParams.get('token');
+  const secret = searchParams.get('secret');
+  const router = useRouter();
+
+  const handleSendResetPassword = async () => {
+    try {
+      if (password !== confirmPassword) {
+        throw new Error('Passwords do not match');
+      }
+
+      setLoading(true);
+      await account.updateRecovery(userId!, secret!, password);
+      toast.success('Password has been reset successfully');
+      router.push('/login');
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="auth-background">
@@ -33,7 +54,12 @@ function ResetPasswordPage() {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
 
-        <Button>Reset Password</Button>
+        <Button
+          onClick={handleSendResetPassword}
+          disabled={loading || !password || !confirmPassword}
+        >
+          Reset Password
+        </Button>
       </div>
     </div>
   );

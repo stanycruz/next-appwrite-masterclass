@@ -5,10 +5,11 @@ import { getLoggedInUser } from '@/services/users';
 import toast from 'react-hot-toast';
 import Spinner from '@/components/ui/spinner';
 import VerifyEmail from '@/components/functional/verify-email';
+import { IUsersStore, usersStore } from '@/store/users-store';
 
 function PrivateLayout({ children }: { children: React.ReactNode }) {
-  const [loggedInUser, setLoggedInUser] = React.useState<IUser | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const { setLoggedInUser, loggedInUser } = usersStore() as IUsersStore;
 
   const fetchLoggedInUser = async () => {
     try {

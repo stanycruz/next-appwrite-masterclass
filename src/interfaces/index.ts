@@ -3,7 +3,7 @@ export interface IUser {
   email: string;
   userId: string;
   profilePictureUrl: string;
-  $createdAt: number;
-  $updatedAt: number;
+  $createdAt: string;
+  $updatedAt: string;
   emailVerification: boolean;
 }

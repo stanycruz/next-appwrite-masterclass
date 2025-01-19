@@ -3,9 +3,12 @@ import { Button } from '@/components/ui/button';
 import { IUsersStore, usersStore } from '@/store/users-store';
 import dayjs from 'dayjs';
 import React from 'react';
+import EditProfileModal from './_components/edit-profile-modal';
+import { IUser } from '@/interfaces';
 
 function ProfilePage() {
   const { loggedInUser } = usersStore() as IUsersStore;
+  const [showEditProfileModal, setShowEditProfileModal] = React.useState(false);
 
   let profilePictureUrl = loggedInUser?.profilePictureUrl;
 
@@ -49,8 +52,18 @@ function ProfilePage() {
 
       <div className="flex justify-end mt-7 gap-5">
         <Button>Change Password</Button>
-        <Button>Edit Profile</Button>
+        <Button onClick={() => setShowEditProfileModal(true)}>
+          Edit Profile
+        </Button>
       </div>
+
+      {showEditProfileModal && (
+        <EditProfileModal
+          showEditProfileModal={showEditProfileModal}
+          setShowEditProfileModal={setShowEditProfileModal}
+          loggedInUser={loggedInUser as IUser}
+        />
+      )}
     </div>
   );
 }

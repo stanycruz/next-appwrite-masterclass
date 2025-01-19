@@ -113,3 +113,21 @@ export const updateUserProfile = async ({
     throw new Error(error);
   }
 };
+
+export const changeUserPassword = async ({
+  password,
+  oldPassword,
+}: {
+  password: string;
+  oldPassword: string;
+}) => {
+  try {
+    await account.updatePassword(password, oldPassword);
+    return {
+      success: true,
+      message: 'Password changed successfully',
+    };
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};

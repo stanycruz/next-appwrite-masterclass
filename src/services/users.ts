@@ -58,6 +58,7 @@ export const getLoggedInUser = async () => {
     const finalUserObject = {
       ...authResponse,
       ...user,
+      userDocId: user.$id,
     };
 
     return {
@@ -76,6 +77,37 @@ export const logoutUser = async () => {
     return {
       success: true,
       message: 'User logged out successfully',
+    };
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const updateUserProfile = async ({
+  name,
+  profilePictureUrl,
+  userDocId,
+}: {
+  name: string;
+  profilePictureUrl: string;
+  userDocId: string;
+}) => {
+  try {
+    await account.updateName(name);
+
+    await databases.updateDocument(
+      APPWRITE_DATABASE_ID,
+      USERS_COLLECTION_ID,
+      userDocId,
+      {
+        name,
+        profilePictureUrl,
+      }
+    );
+
+    return {
+      success: true,
+      message: 'Profile updated successfully',
     };
   } catch (error: any) {
     throw new Error(error);

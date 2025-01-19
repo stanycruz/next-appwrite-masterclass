@@ -6,12 +6,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { IUser } from '@/interfaces';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import toast from 'react-hot-toast';
+import { uploadFileAndGetURL } from '@/helpers/file-uploads';
+import { updateUserProfile } from '@/services/users';
+import { IUsersStore, usersStore } from '@/store/users-store';
 
 interface EditProfileModalProps {
   showEditProfileModal: boolean;
@@ -24,15 +26,34 @@ function EditProfileModal({
   setShowEditProfileModal,
   loggedInUser,
 }: EditProfileModalProps) {
+  const { setLoggedInUser } = usersStore() as IUsersStore;
   const [name, setName] = React.useState(loggedInUser.name);
   const [newProfilePicture, setNewProfilePicture] = React.useState<File | null>(
     null
   );
   const [loading, setLoading] = React.useState(false);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     try {
       setLoading(true);
+      let newProfilePictureUrl = loggedInUser.profilePictureUrl;
+
+      if (newProfilePicture) {
+        newProfilePictureUrl = await uploadFileAndGetURL(newProfilePicture);
+      }
+
+      await updateUserProfile({
+        name,
+        profilePictureUrl: newProfilePictureUrl,
+        userDocId: loggedInUser.userDocId,
+      });
+      toast.success('Profile updated successfully');
+      setLoggedInUser({
+        ...loggedInUser,
+        name,
+        profilePictureUrl: newProfilePictureUrl,
+      });
+      setShowEditProfileModal(false);
     } catch (error) {
       toast.error('Failed to update profile');
     } finally {

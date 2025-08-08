@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Projeto Fullstack com Next.js e Appwrite
 
-## Getting Started
+Este repositório contém o projeto desenvolvido durante a masterclass ["Next.js and Appwrite Masterclass - Build FullStack Projects"](https://www.udemy.com/course/nextjs-and-appwrite-masterclass-build-fullstack-projects) disponível na Udemy. O foco da aplicação é demonstrar a integração entre Next.js (App Router) e Appwrite, com autenticação, banco de dados e layout modernos utilizando Tailwind CSS.
 
-First, run the development server:
+## 🛠️ Tecnologias Utilizadas
+
+- [Next.js 13+ (App Router)](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Appwrite](https://appwrite.io/) — Backend as a Service (BaaS)
+- [ShadCN/UI](https://ui.shadcn.com/) — Componentes modernos com suporte a tema escuro
+
+## 📁 Estrutura de Pastas
+
+```
+src/
+├── app/                  # Rotas públicas e privadas (App Router)
+├── components/           # Componentes reutilizáveis
+├── config/               # Configurações do Appwrite
+├── constants/            # Constantes da aplicação
+├── helpers/              # Funções utilitárias
+├── interfaces/           # Tipagens TypeScript
+├── layout/               # Estrutura visual
+├── lib/                  # Funções auxiliares e bibliotecas
+├── services/             # Interações com Appwrite (auth, database, etc.)
+└── store/                # Estado da aplicação
+```
+
+## ⚙️ Configuração Inicial
+
+1. **Clone o repositório**:
+
+```bash
+git clone https://github.com/seu-usuario/seu-repositorio.git
+cd seu-repositorio
+```
+
+2. **Instale as dependências**:
+
+```bash
+npm install
+# ou
+yarn
+```
+
+3. **Configure as variáveis de ambiente**:
+
+Renomeie o arquivo `.env.example` para `.env.local` e preencha com os valores do seu projeto Appwrite.
+
+4. **Inicie o servidor local**:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) no navegador para ver o app rodando.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔐 Variáveis de Ambiente
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Crie o arquivo `.env.local` com o seguinte conteúdo:
 
-## Learn More
+```
+NEXT_PUBLIC_APPWRITE_URL=http://localhost/v1
+NEXT_PUBLIC_APPWRITE_PROJECT=SEU_PROJECT_ID
+NEXT_PUBLIC_APPWRITE_DATABASE=SEU_DATABASE_ID
+NEXT_PUBLIC_APPWRITE_COLLECTION=SEU_COLLECTION_ID
+```
 
-To learn more about Next.js, take a look at the following resources:
+Esses valores devem ser obtidos diretamente no console do Appwrite.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 👨‍💻 Autor
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Projeto desenvolvido e publicado por [Stanislaw Cruz](https://github.com/stanycruz), com base nos estudos realizados durante a masterclass da Udemy sobre Next.js e Appwrite.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Sinta-se à vontade para contribuir ou adaptar este projeto para suas próprias necessidades.
